@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     }
 
     const savedColleges = await prisma.savedCollege.findMany({
-      where: { userId: session.user.id },
+      where: { userId: session.user.id! },
       include: {
         college: {
           include: {
@@ -45,8 +45,8 @@ export async function POST(req: NextRequest) {
 
     const saved = await prisma.savedCollege.create({
       data: {
-        userId: session.user.id,
-        collegeId
+        user: { connect: { id: session.user.id! } },
+        college: { connect: { id: collegeId } }
       }
     });
 
@@ -78,7 +78,7 @@ export async function DELETE(req: NextRequest) {
     await prisma.savedCollege.delete({
       where: {
         userId_collegeId: {
-          userId: session.user.id,
+          userId: session.user.id!,
           collegeId
         }
       }

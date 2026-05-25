@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
 
     const savedColleges = await prisma.savedCollege.findMany({
       where: {
-        userId: session.user.id,
+        userId: session.user.id!,
         collegeId: { in: ids }
       },
       select: { collegeId: true }

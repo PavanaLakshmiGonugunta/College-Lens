@@ -10,7 +10,7 @@ export async function GET() {
     }
 
     const savedComparisons = await prisma.savedComparison.findMany({
-      where: { userId: session.user.id },
+      where: { userId: session.user.id! },
       orderBy: { createdAt: 'desc' },
     });
 
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
     // Check if identical comparison already exists to avoid clutter
     const existing = await prisma.savedComparison.findFirst({
       where: {
-        userId: session.user.id,
+        userId: session.user.id!,
         collegeIds: {
           equals: collegeIds
         }
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
 
     const comparison = await prisma.savedComparison.create({
       data: {
-        userId: session.user.id,
+        user: { connect: { id: session.user.id! } },
         collegeIds,
         name: name || null,
       },
