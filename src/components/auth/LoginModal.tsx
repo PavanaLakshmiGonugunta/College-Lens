@@ -40,8 +40,10 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           onClose();
           if (email.toLowerCase() === 'admin@gmail.com') {
             window.location.href = '/admin';
-          } else {
+          } else if (window.location.pathname === '/') {
             window.location.href = '/colleges';
+          } else {
+            window.location.reload();
           }
         }
       } else {
@@ -63,7 +65,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             password,
           });
           onClose();
-          window.location.href = '/colleges';
+          if (window.location.pathname === '/') {
+            window.location.href = '/colleges';
+          } else {
+            window.location.reload();
+          }
         }
       }
     } catch (err) {
