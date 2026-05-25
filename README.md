@@ -73,15 +73,6 @@ Backend endpoints follow standard RESTful conventions:
 
 ---
 
-## Screenshots
-
-*(Placeholders for future UI documentation)*
-
-- [Home Dashboard Screenshot Placeholder]
-- [Search & Filter Interface Screenshot Placeholder]
-- [Comparison Matrix Screenshot Placeholder]
-
----
 
 ## Local Development
 
@@ -127,34 +118,9 @@ Backend endpoints follow standard RESTful conventions:
 
 Development seed includes the following test accounts:
 - **Admin Access**: `admin@gmail.com` / `password123`
-- **Standard User**: `rahul@example.com` / `password123`
+- **Standard User**: `janeDoe@example.com` / `password123`
 
 ---
-
-## Testing
-
-*(Framework to be implemented)*
-- **Unit Tests**: Planned implementation via Jest/React Testing Library
-- **E2E Tests**: Planned implementation via Playwright
-- Command: `npm run test` (Coming soon)
-
-## Deployment
-
-CollegeLens is optimized for edge-network deployments such as Vercel.
-
-1. Connect your GitHub repository to Vercel.
-2. Ensure the following Environment Variables are configured in the Vercel dashboard:
-   - `DATABASE_URL` (Must point to a production-ready DB like Supabase/Neon)
-   - `NEXTAUTH_SECRET`
-   - `NEXTAUTH_URL` (Set to your production domain)
-3. Set the build command to `prisma generate && next build`.
-
-## Roadmap
-
-- [ ] Implement Redis caching for search endpoints
-- [ ] Migrate `credentials` auth provider to OAuth (Google/GitHub)
-- [ ] Introduce full-suite automated unit testing
-- [ ] Implement data-export (CSV/PDF) functionality for the comparison matrix
 
 ---
 
