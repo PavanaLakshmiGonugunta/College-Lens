@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model College {
+  id              String    @id @default(cuid())
+  name            String
+  slug            String    @unique
+  location        String
+  city            String
+  state           String
+  type            String    // "Public" | "Private" | "Deemed"
+  establishedYear Int
+  rating          Float
+  ranking         Int?
+  feesMin         Int
+  feesMax         Int
+  description     String    @db.Text
+  image           String
+  logo            String
+  website         String?
+  accreditation   String?
+  courses         Course[]
+  placements      Placement[]
+  reviews         Review[]
+  savedBy         SavedCollege[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Course {
+  id        String  @id @default(cuid())
+  name      String
+  duration  String
+  degree    String
+  fees      Int
+  collegeId String
+  college   College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+}
+
+model Placement {
+  id             String   @id @default(cuid())
+  year           Int
+  averagePackage Float
+  highestPackage Float
+  medianPackage  Float?
+  placementRate  Float
+  topRecruiters  String[]
+  collegeId      String
+  college        College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Float
+  title     String
+  content   String   @db.Text
+  category  String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String
+  password      String
+  image         String?
+  role          Role           @default(USER)
+  reviews       Review[]
+  savedColleges SavedCollege[]
+  savedComparisons SavedComparison[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model SavedCollege {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  @@unique([userId, collegeId])
+}
+
+model SavedComparison {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String?
+  collegeIds String[]
+  createdAt  DateTime @default(now())
+}
