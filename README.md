@@ -1,8 +1,8 @@
 <div align="center">
   
-  # 🎓 CollegeLens
+  # CollegeLens
   
-  **Discover, Compare, and Shortlist Your Dream Colleges in India**
+  **Data-Driven College Discovery and Comparison Platform**
   
   [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
@@ -14,97 +14,154 @@
 
 ---
 
-CollegeLens is a premium, data-driven college discovery platform built with modern web technologies. Inspired by the clarity and aesthetics of modern "Lens" interfaces, it empowers students to make informed educational decisions through dynamic search, side-by-side comparisons, and comprehensive analytics.
+CollegeLens is a web application designed to facilitate the discovery and evaluation of higher education institutions in India. It provides structured search, tabular comparisons, and persistence of user preferences through a custom backend integration.
 
-## ✨ Key Features
+## Key Features
 
-- 🔍 **Dynamic Smart Search**: Lightning-fast autocomplete search for colleges, cities, and streams.
-- ⚖️ **Side-by-Side Comparison**: Select and compare multiple colleges across metrics like fees, placement packages, ratings, and course offerings.
-- 📌 **Personalized Shortlists**: Log in to bookmark favorite colleges and save custom comparison groups.
-- 📊 **Detailed College Insights**: Access comprehensive data including rankings, top recruiters, and detailed brochures.
-- ⚙️ **Admin Dashboard**: A secure, integrated CMS for administrators to manage college data, edit entries, and add new institutions seamlessly.
-- 🎨 **Glassmorphic UI**: A stunning, responsive design that looks perfect on both desktop and mobile devices.
+- **Search Engine**: Indexed search supporting queries by institution name, city, and academic stream with autocomplete functionality.
+- **Comparative Analysis**: Matrix-style comparison engine evaluating metrics such as tuition fees, placement statistics, rating indexes, and programmatic offerings.
+- **Data Persistence**: State-managed session tracking allowing authenticated users to store bookmarked institutions and specific comparison configurations.
+- **Administration Panel**: Integrated CMS supporting CRUD operations for the underlying PostgreSQL college database.
+- **Interface Design**: Responsive UI optimized for desktop and mobile devices.
 
-## 🏗️ Technology Stack
+## Technology Stack
 
-- **Frontend**: [Next.js 15 (App Router)](https://nextjs.org/), React 19, TypeScript
-- **Styling**: Tailwind CSS (v4), Lucide React Icons
-- **Backend**: Next.js API Routes, Prisma ORM
-- **Database**: PostgreSQL
-- **Authentication**: NextAuth.js (Credentials Provider)
+- **Core**: [Next.js 15 (App Router)](https://nextjs.org/), React 19
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS (v4)
+- **Database Architecture**: PostgreSQL managed via Prisma ORM
+- **Authentication**: NextAuth.js (Session-based Credentials Provider)
 
 ---
 
-## 🚀 Getting Started
+## Architecture Overview
 
-Follow these steps to set up CollegeLens on your local machine.
+### Project Structure
+
+```text
+src/
+├── app/               # Next.js App Router (Pages, Layouts, API Routes)
+│   ├── admin/         # CMS and administrative endpoints
+│   ├── api/           # Backend REST/JSON endpoints
+│   ├── colleges/      # College directory and details
+│   └── compare/       # Comparison engine interface
+├── components/        # Reusable React components (Auth, Layout, UI)
+├── lib/               # Utility functions and Prisma client instance
+└── types/             # TypeScript type definitions and interfaces
+prisma/
+├── schema.prisma      # Database schema definitions
+└── seed.ts            # Development data population script
+```
+
+### Database Schema Preview
+
+The primary entities in the PostgreSQL database are structured as follows:
+
+- **`User`**: Manages authentication profiles and role-based access (`USER`, `ADMIN`).
+- **`College`**: Core institution entity containing metadata (name, location, fees, streams).
+- **`SavedCollege`**: Relational table mapping users to bookmarked institutions.
+- **`SavedComparison`**: Serialization table storing custom comparison matrix states.
+
+### API Overview
+
+Backend endpoints follow standard RESTful conventions:
+
+- `GET /api/colleges` - Retrieve paginated list of colleges (supports `search`, `stream` parameters)
+- `GET /api/colleges/[slug]` - Retrieve distinct college profiles
+- `POST /api/admin/colleges` - Create a new institution record (Admin only)
+- `POST /api/saved` - Persist a college bookmark to a user session
+
+---
+
+## Screenshots
+
+*(Placeholders for future UI documentation)*
+
+- [Home Dashboard Screenshot Placeholder]
+- [Search & Filter Interface Screenshot Placeholder]
+- [Comparison Matrix Screenshot Placeholder]
+
+---
+
+## Local Development
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- PostgreSQL (via Docker or local installation)
+- Node.js (v18+)
+- PostgreSQL instance (Docker recommended)
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/PavanaLakshmiGonugunta/College-Lens.git
-cd College-Lens
-```
+### Setup Instructions
 
-### 2. Install Dependencies
-```bash
-npm install
-```
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/PavanaLakshmiGonugunta/College-Lens.git
+   cd College-Lens
+   ```
 
-### 3. Environment Configuration
-Create a `.env` file in the root directory and add your configurations:
-```env
-# Database Connection
-DATABASE_URL="postgresql://user:password@localhost:5432/collegelens"
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-# NextAuth Configuration
-NEXTAUTH_SECRET="your-super-secret-string-here"
-NEXTAUTH_URL="http://localhost:3000"
-```
+3. **Environment Configuration**
+   Duplicate `.env.example` to `.env` and assign valid credentials:
+   ```env
+   DATABASE_URL="postgresql://user:password@localhost:5432/collegelens"
+   NEXTAUTH_SECRET="your-super-secret-string-here"
+   NEXTAUTH_URL="http://localhost:3000"
+   ```
 
-### 4. Database Setup & Seeding
-Start your PostgreSQL server. Then, run the following commands to initialize the schema and populate the database with realistic sample data:
-```bash
-npx prisma db push
-npx prisma db seed
-```
-*(Note: The seed script automatically creates dummy colleges and an Admin user).*
+4. **Database Initialization**
+   Apply schema migrations and seed the database:
+   ```bash
+   npx prisma db push
+   npx prisma db seed
+   ```
 
-### 5. Start the Development Server
-```bash
-npm run dev
-```
-Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
+5. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
+   Navigate to `http://localhost:3000`.
 
----
+### Default Environments
 
-## 🔑 Default Accounts
-
-After running the database seed, you can access the platform using these credentials:
-
-| Role | Email | Password |
-| :--- | :--- | :--- |
-| **Admin** | `admin@gmail.com` | `password123` |
-| **User** | `rahul@example.com` | `password123` |
-
-*Logging in as an admin will automatically redirect you to the secure Admin Dashboard.*
+Development seed includes the following test accounts:
+- **Admin Access**: `admin@gmail.com` / `password123`
+- **Standard User**: `rahul@example.com` / `password123`
 
 ---
 
-## 🤝 Contributing
+## Testing
 
-We welcome contributions to make CollegeLens even better! 
+*(Framework to be implemented)*
+- **Unit Tests**: Planned implementation via Jest/React Testing Library
+- **E2E Tests**: Planned implementation via Playwright
+- Command: `npm run test` (Coming soon)
+
+## Deployment
+
+CollegeLens is optimized for edge-network deployments such as Vercel.
+
+1. Connect your GitHub repository to Vercel.
+2. Ensure the following Environment Variables are configured in the Vercel dashboard:
+   - `DATABASE_URL` (Must point to a production-ready DB like Supabase/Neon)
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL` (Set to your production domain)
+3. Set the build command to `prisma generate && next build`.
+
+## Roadmap
+
+- [ ] Implement Redis caching for search endpoints
+- [ ] Migrate `credentials` auth provider to OAuth (Google/GitHub)
+- [ ] Introduce full-suite automated unit testing
+- [ ] Implement data-export (CSV/PDF) functionality for the comparison matrix
+
+---
+
+## Contributing
+
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-<div align="center">
-  <p>Built with ❤️ by Pavana Lakshmi Gonugunta</p>
-</div>
+2. Create a feature branch (`git checkout -b feature/NewEndpoint`)
+3. Commit your changes (`git commit -m 'feat: implement new endpoint'`)
+4. Push to the branch (`git push origin feature/NewEndpoint`)
+5. Open a Pull Request for review
