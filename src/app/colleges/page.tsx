@@ -4,26 +4,12 @@ import CollegeCard from '@/components/colleges/CollegeCard';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
+import { getCollegesData } from '@/lib/data';
+
 export const dynamic = 'force-dynamic';
 
 async function getColleges(searchParams: { [key: string]: string | undefined }) {
-  const params = new URLSearchParams();
-  Object.entries(searchParams).forEach(([key, value]) => {
-    if (value) params.append(key, value);
-  });
-
-  const baseUrl = process.env.NEXTAUTH_URL 
-    ? process.env.NEXTAUTH_URL.replace(/\/$/, '') 
-    : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-  const res = await fetch(`${baseUrl}/api/colleges?${params.toString()}`, {
-    cache: 'no-store'
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch colleges');
-  }
-
-  return res.json();
+  return await getCollegesData(searchParams);
 }
 
 function CollegeListSkeleton() {

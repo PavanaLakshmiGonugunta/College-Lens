@@ -3,24 +3,15 @@ import Link from 'next/link';
 import { ArrowLeft, CheckCircle2, XCircle, Minus, GraduationCap } from 'lucide-react';
 import { CompareSync, RemoveCompareButton } from '@/components/colleges/CompareButtons';
 import SaveComparisonButton from '@/components/compare/SaveComparisonButton';
+import { getCompareData } from '@/lib/data';
+import { CompareCollege } from '@/types';
 
 export const dynamic = 'force-dynamic';
 
 async function getCompareColleges(ids: string) {
   if (!ids) return [];
-  
-  const baseUrl = process.env.NEXTAUTH_URL 
-    ? process.env.NEXTAUTH_URL.replace(/\/$/, '') 
-    : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-  const res = await fetch(`${baseUrl}/api/compare?ids=${ids}`, {
-    cache: 'no-store'
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch colleges for comparison');
-  }
-
-  return res.json();
+  const colleges = await getCompareData(ids);
+  return colleges as CompareCollege[];
 }
 
 export default async function ComparePage({
