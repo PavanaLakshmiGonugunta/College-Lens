@@ -9,7 +9,9 @@ export const dynamic = 'force-dynamic';
 async function getCompareColleges(ids: string) {
   if (!ids) return [];
   
-  const baseUrl = (process.env.NEXTAUTH_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const baseUrl = process.env.NEXTAUTH_URL 
+    ? process.env.NEXTAUTH_URL.replace(/\/$/, '') 
+    : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
   const res = await fetch(`${baseUrl}/api/compare?ids=${ids}`, {
     cache: 'no-store'
   });

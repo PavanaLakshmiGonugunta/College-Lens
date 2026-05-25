@@ -12,7 +12,9 @@ async function getColleges(searchParams: { [key: string]: string | undefined }) 
     if (value) params.append(key, value);
   });
 
-  const baseUrl = (process.env.NEXTAUTH_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const baseUrl = process.env.NEXTAUTH_URL 
+    ? process.env.NEXTAUTH_URL.replace(/\/$/, '') 
+    : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
   const res = await fetch(`${baseUrl}/api/colleges?${params.toString()}`, {
     cache: 'no-store'
   });
