@@ -81,7 +81,7 @@ export default function Header() {
                       </Link>
                     )}
                     <button
-                      onClick={() => signOut({ callbackUrl: window.location.origin })}
+                      onClick={() => signOut({ callbackUrl: window.location.href })}
                       className="block w-full text-left px-4 py-2 text-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-slate-50)] hover:text-red-600"
                     >
                       Sign Out
@@ -143,7 +143,7 @@ export default function Header() {
                   <button
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      signOut({ callbackUrl: window.location.origin });
+                      signOut({ callbackUrl: window.location.href });
                     }}
                     className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50"
                   >
