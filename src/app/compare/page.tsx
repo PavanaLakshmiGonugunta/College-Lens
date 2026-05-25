@@ -27,7 +27,7 @@ export default async function ComparePage({
 }) {
   const resolvedSearchParams = await searchParams;
   const ids = resolvedSearchParams.ids || '';
-  const colleges: CompareCollege[] = await getCompareColleges(ids);
+  const colleges: any[] = await getCompareColleges(ids);
 
   return (
     <div className="min-h-screen bg-[var(--color-surface-alt)] py-8">
