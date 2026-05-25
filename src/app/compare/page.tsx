@@ -9,7 +9,8 @@ export const dynamic = 'force-dynamic';
 async function getCompareColleges(ids: string) {
   if (!ids) return [];
   
-  const res = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/compare?ids=${ids}`, {
+  const baseUrl = (process.env.NEXTAUTH_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const res = await fetch(`${baseUrl}/api/compare?ids=${ids}`, {
     cache: 'no-store'
   });
 

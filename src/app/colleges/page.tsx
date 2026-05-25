@@ -12,7 +12,8 @@ async function getColleges(searchParams: { [key: string]: string | undefined }) 
     if (value) params.append(key, value);
   });
 
-  const res = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/colleges?${params.toString()}`, {
+  const baseUrl = (process.env.NEXTAUTH_URL || 'http://localhost:3000').replace(/\/$/, '');
+  const res = await fetch(`${baseUrl}/api/colleges?${params.toString()}`, {
     cache: 'no-store'
   });
 
