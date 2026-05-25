@@ -77,7 +77,7 @@ export default function Header() {
                   <div className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all border border-[var(--color-border)]">
                     {(session.user as any)?.role !== 'ADMIN' && (
                       <Link href="/saved" className="block px-4 py-2 text-sm text-[var(--color-text-secondary)] hover:bg-[var(--color-slate-50)] hover:text-[var(--color-primary)]">
-                        Saved Colleges
+                        Dashboard
                       </Link>
                     )}
                     <button
@@ -137,7 +137,7 @@ export default function Header() {
                       className="block px-3 py-2 rounded-md text-base font-medium text-[var(--color-text-primary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-slate-50)]"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      Saved Colleges
+                      Dashboard
                     </Link>
                   )}
                   <button
