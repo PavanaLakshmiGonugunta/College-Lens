@@ -12,7 +12,7 @@ export default function SaveButton({ collegeId }: { collegeId: string }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  if (session?.user?.role === 'ADMIN') {
+  if ((session?.user as any)?.role === 'ADMIN') {
     return null;
   }
 

@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { SessionProvider } from "@/components/providers/SessionProvider";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,7 +41,9 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} h-full`}>
       <body className="min-h-full flex flex-col font-sans antialiased">
         <SessionProvider>
-          <Header />
+          <Suspense fallback={null}>
+            <Header />
+          </Suspense>
           <main className="flex-1">{children}</main>
           <Footer />
         </SessionProvider>

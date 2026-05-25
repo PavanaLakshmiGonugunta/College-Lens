@@ -34,7 +34,7 @@ export default async function SavedCollegesPage({
     orderBy: { createdAt: 'desc' }
   });
 
-  let savedComparisons = [];
+  let savedComparisons: any[] = [];
   if (activeTab === 'comparisons') {
     savedComparisons = await prisma.savedComparison.findMany({
       where: { userId: session.user.id },

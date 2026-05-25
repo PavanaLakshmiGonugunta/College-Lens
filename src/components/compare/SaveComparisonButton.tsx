@@ -12,7 +12,7 @@ export default function SaveComparisonButton({ collegeIds }: { collegeIds: strin
   const router = useRouter();
   const { data: session } = useSession();
 
-  if (session?.user?.role === 'ADMIN') {
+  if ((session?.user as any)?.role === 'ADMIN') {
     return null;
   }
 

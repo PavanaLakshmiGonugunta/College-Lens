@@ -152,7 +152,9 @@ export default async function CollegesPage({
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar */}
           <div className="w-full md:w-64 lg:w-80 flex-shrink-0">
-            <FilterSidebar />
+            <Suspense fallback={<div className="bg-white rounded-2xl shadow-sm border border-[var(--color-border)] h-[500px] skeleton"></div>}>
+              <FilterSidebar />
+            </Suspense>
           </div>
 
           {/* Main Content */}
